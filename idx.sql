@@ -1,0 +1,15 @@
+CREATE INDEX idx_items ON items (item_id, item_name, item_description, type, on_hand, on_order, committed);
+CREATE INDEX idx_vendor_accounts ON vendor_accounts (vendor_accounts_id, name);
+CREATE INDEX idx_vendor_items ON vendor_items (vendor_item_id);
+CREATE INDEX idx_resource_id ON resources (resource_id, location, status);
+CREATE INDEX idx_raw_material ON raw_material (rm_id);
+CREATE INDEX idx_build_item ON build_item (build_id, serial_number);
+CREATE INDEX idx_consumables ON consumables (consumable_id);
+CREATE INDEX idx_bill_of_materials ON bill_of_materials (item_id,rm_id, build_item_id);
+CREATE INDEX idx_vendor_accounts ON vendor_accounts (vendor_rating);
+CREATE INDEX idx_customers ON customers (account_name, customer_id, credit_reference_name_1, credit_reference_account_1, credit_reference_balance_1, credit_reference_name_2, credit_reference_account_2, credit_reference_balance_2, credit_reference_name_3, credit_reference_account_3, credit_reference_balance_3);
+CREATE INDEX idx_customer_order ON customer_order (order_date, order_id);
+CREATE UNIQUE INDEX idx_pending_order ON pending_order (pending_order_id, item_id, status);
+CREATE INDEX idx_order_line_items ON order_line_items (order_id, item_id, quantity);
+CREATE INDEX idx_bin ON bin (bin_id, location, contents);
+CREATE INDEX idx_work_order ON work_order (product_id, current_location, destination_location, trip_id);
