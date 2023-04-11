@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [MRP]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Database [MRP]    Script Date: 4/11/2023 11:47:15 AM ******/
 CREATE DATABASE [MRP]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,7 +82,7 @@ ALTER DATABASE [MRP] SET QUERY_STORE = OFF
 GO
 USE [MRP]
 GO
-/****** Object:  Table [dbo].[bill_of_materials]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[bill_of_materials]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -97,14 +97,14 @@ CREATE TABLE [dbo].[bill_of_materials](
 	[quantity_used] [int] NOT NULL,
 	[quantity_needed] [int] NOT NULL,
 	[time_needed] [time](7) NOT NULL,
-	[completed_product_id] [int] NOT NULL,
+	[manufactured_product_id] [int] NOT NULL,
  CONSTRAINT [PK_bill_of_materials] PRIMARY KEY CLUSTERED 
 (
 	[bom_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[bin]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[bin]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[bin](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[build_item]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[build_item]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,13 +129,14 @@ CREATE TABLE [dbo].[build_item](
 	[quantity] [int] NOT NULL,
 	[description] [varchar](50) NOT NULL,
 	[status] [varchar](50) NOT NULL,
+	[serial_number] [int] NOT NULL,
  CONSTRAINT [PK_build_item] PRIMARY KEY CLUSTERED 
 (
 	[build_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[consumables]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[consumables]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +152,7 @@ CREATE TABLE [dbo].[consumables](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[customer_order]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[customer_order]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -168,14 +169,13 @@ CREATE TABLE [dbo].[customer_order](
 	[credit_limit] [decimal](10, 2) NOT NULL,
 	[status] [varchar](20) NOT NULL,
 	[notes] [varchar](50) NOT NULL,
-	[serial_number] [varchar](50) NOT NULL,
  CONSTRAINT [PK_orders] PRIMARY KEY CLUSTERED 
 (
 	[order_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[customers]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[customers]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -202,7 +202,7 @@ CREATE TABLE [dbo].[customers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[hilo_drivers]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[hilo_drivers]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -216,7 +216,7 @@ CREATE TABLE [dbo].[hilo_drivers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[items]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[items]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +243,7 @@ CREATE TABLE [dbo].[items](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[manufactured_products]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[manufactured_products]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -252,15 +252,13 @@ CREATE TABLE [dbo].[manufactured_products](
 	[id] [int] NOT NULL,
 	[quantity] [int] NOT NULL,
 	[location] [varchar](50) NOT NULL,
-	[job_order_id] [int] NOT NULL,
-	[serial_number] [int] NOT NULL,
  CONSTRAINT [PK_manufactured_products] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[order_line_items]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[order_line_items]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -277,7 +275,7 @@ CREATE TABLE [dbo].[order_line_items](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[pending_order]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[pending_order]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -294,7 +292,7 @@ CREATE TABLE [dbo].[pending_order](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[raw_material]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[raw_material]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -310,7 +308,7 @@ CREATE TABLE [dbo].[raw_material](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[received_products]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[received_products]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -328,7 +326,7 @@ CREATE TABLE [dbo].[received_products](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[resources]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[resources]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -347,7 +345,7 @@ CREATE TABLE [dbo].[resources](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[shipments]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[shipments]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -362,7 +360,7 @@ CREATE TABLE [dbo].[shipments](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[trip_plans]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[trip_plans]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +375,7 @@ CREATE TABLE [dbo].[trip_plans](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[update_order]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[update_order]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -395,7 +393,7 @@ CREATE TABLE [dbo].[update_order](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vendor_accounts]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[vendor_accounts]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -413,7 +411,7 @@ CREATE TABLE [dbo].[vendor_accounts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[vendor_items]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[vendor_items]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -431,7 +429,7 @@ CREATE TABLE [dbo].[vendor_items](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[warehouse_locations]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[warehouse_locations]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -449,7 +447,7 @@ CREATE TABLE [dbo].[warehouse_locations](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[work_order]    Script Date: 4/10/2023 8:49:38 PM ******/
+/****** Object:  Table [dbo].[work_order]    Script Date: 4/11/2023 11:47:15 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -476,7 +474,7 @@ REFERENCES [dbo].[items] ([item_id])
 GO
 ALTER TABLE [dbo].[bill_of_materials] CHECK CONSTRAINT [FK_bill_of_materials_items]
 GO
-ALTER TABLE [dbo].[bill_of_materials]  WITH CHECK ADD  CONSTRAINT [FK_bill_of_materials_manufactured_products] FOREIGN KEY([completed_product_id])
+ALTER TABLE [dbo].[bill_of_materials]  WITH CHECK ADD  CONSTRAINT [FK_bill_of_materials_manufactured_products] FOREIGN KEY([manufactured_product_id])
 REFERENCES [dbo].[manufactured_products] ([id])
 GO
 ALTER TABLE [dbo].[bill_of_materials] CHECK CONSTRAINT [FK_bill_of_materials_manufactured_products]
@@ -505,11 +503,6 @@ ALTER TABLE [dbo].[items]  WITH CHECK ADD  CONSTRAINT [FK_items_vendor_items] FO
 REFERENCES [dbo].[vendor_items] ([vendor_item_id])
 GO
 ALTER TABLE [dbo].[items] CHECK CONSTRAINT [FK_items_vendor_items]
-GO
-ALTER TABLE [dbo].[manufactured_products]  WITH CHECK ADD  CONSTRAINT [FK_manufactured_products_build_item] FOREIGN KEY([serial_number])
-REFERENCES [dbo].[build_item] ([build_id])
-GO
-ALTER TABLE [dbo].[manufactured_products] CHECK CONSTRAINT [FK_manufactured_products_build_item]
 GO
 ALTER TABLE [dbo].[order_line_items]  WITH CHECK ADD  CONSTRAINT [FK_order_line_item_customer_order] FOREIGN KEY([order_id])
 REFERENCES [dbo].[customer_order] ([order_id])
@@ -555,11 +548,6 @@ ALTER TABLE [dbo].[trip_plans]  WITH CHECK ADD  CONSTRAINT [FK_trip_plans_trip_p
 REFERENCES [dbo].[hilo_drivers] ([driver_id])
 GO
 ALTER TABLE [dbo].[trip_plans] CHECK CONSTRAINT [FK_trip_plans_trip_plans]
-GO
-ALTER TABLE [dbo].[trip_plans]  WITH CHECK ADD  CONSTRAINT [FK_trip_plans_trip_plans1] FOREIGN KEY([order_id])
-REFERENCES [dbo].[manufactured_products] ([id])
-GO
-ALTER TABLE [dbo].[trip_plans] CHECK CONSTRAINT [FK_trip_plans_trip_plans1]
 GO
 ALTER TABLE [dbo].[update_order]  WITH CHECK ADD  CONSTRAINT [FK_update_order_update_order] FOREIGN KEY([line_item_id])
 REFERENCES [dbo].[order_line_items] ([line_item_id])
